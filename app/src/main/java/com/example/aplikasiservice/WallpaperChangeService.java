@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 public class WallpaperChangeService extends Service implements Runnable {
     /*referensi gambar wallpaper disimpan dalam sebuah array,
     wallpaper1 dan wallpaper2 adalah nama filenya.*/
-    private int wallpaperId[] = {R.drawable.wallpaper1, R.drawable.wallpaper2};
+    private int wallpaperId[] = {R.drawable.wallpaper1, R.drawable.wallpaper2, R.drawable.wallpaper3};
     private int waktu;
 
     /*Deklarasi variabel flag untuk mengecek gambar mana yang akan
@@ -24,6 +24,7 @@ public class WallpaperChangeService extends Service implements Runnable {
     /*Deklarasi 2 variabel bitmat untuk menyimpan gambar wallpaper*/
     private Bitmap gambar1;
     private Bitmap gambar2;
+    private Bitmap gambar3;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,6 +42,7 @@ public class WallpaperChangeService extends Service implements Runnable {
         //inisialisasi objek bitmap dengan gambar wallpaper
         gambar1 = BitmapFactory.decodeResource(getResources(),wallpaperId[0]);
         gambar2 = BitmapFactory.decodeResource(getResources(),wallpaperId[1]);
+        gambar3 = BitmapFactory.decodeResource(getResources(),wallpaperId[2]);
 
         //Mulai thread agar service tetap berjalan di latar belakang
         thread = new Thread(WallpaperChangeService.this);
@@ -67,8 +69,12 @@ public class WallpaperChangeService extends Service implements Runnable {
                     myWallpaper.setBitmap(gambar1);
                     FLAG++;
                 }
-                else{
+                else if(FLAG==1){
                     myWallpaper.setBitmap(gambar2);
+                    FLAG++;
+                }
+                else{
+                    myWallpaper.setBitmap(gambar3);
                     FLAG--;
                 }
                 Thread.sleep(100*waktu);
